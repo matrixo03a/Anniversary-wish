@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sumu's Gift</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fdf6ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', cursive;
+      position: relative;
+    }
+
+    .box-wrapper {
+      position: relative;
+      width: 260px;
+      height: 200px;
+      background: #fff1f3;
+      border-radius: 16px;
+      border: 2px solid #e8bfbf;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .box-wrapper:hover {
+      transform: scale(1.02);
+    }
+
+    .ribbon-horizontal,
+    .ribbon-vertical {
+      position: absolute;
+      background: linear-gradient(to right, #fcb8d2, #ff9eb8);
+      transition: all 1s ease;
+      z-index: 2;
+    }
+
+    .ribbon-horizontal {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      transform: translateY(-50%);
+      border-radius: 5px;
+    }
+
+    .ribbon-vertical {
+      top: 0;
+      left: 50%;
+      width: 10px;
+      height: 100%;
+      transform: translateX(-50%);
+      border-radius: 5px;
+    }
+
+    .box-open .ribbon-horizontal {
+      transform: translateY(-50%) scaleX(0);
+      opacity: 0;
+    }
+
+    .box-open .ribbon-vertical {
+      transform: translateX(-50%) scaleY(0);
+      opacity: 0;
+    }
+
+    .flower-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle, #ffe2ec, #fba7bd);
+      border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      animation: bloom 2s infinite ease-in-out;
+      z-index: 3;
+    }
+
+    @keyframes bloom {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.06); }
+    }
+
+    .flower {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at center, #ffe6f0, #ffc0cb);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 192, 203, 0.5);
+      animation: float 4s ease-in-out infinite;
+      opacity: 0.9;
+      z-index: 1;
+    }
+
+    .flower.tl { top: -30px; left: -30px; }
+    .flower.tr { top: -30px; right: -30px; animation-delay: 0.5s; }
+    .flower.bl { bottom: -30px; left: -30px; animation-delay: 1s; }
+    .flower.br { bottom: -30px; right: -30px; animation-delay: 1.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Popup Page */
+    .popup {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(253, 246, 236, 0.98);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      z-index: 5;
+    }
+
+    .popup.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .popup-content {
+      background: #fff1f3;
+      padding: 40px;
+      border-radius: 20px;
+      border: 2px solid #f5b3c2;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content p {
+      color: #aa667b;
+      font-size: 22px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Flowers -->
+  <div class="flower tl"></div>
+  <div class="flower tr"></div>
+  <div class="flower bl"></div>
+  <div class="flower br"></div>
+
+  <!-- Gift Box -->
+  <div class="box-wrapper" onclick="openBox(this)">
+    <div class="ribbon-horizontal"></div>
+    <div class="ribbon-vertical"></div>
+    <div class="flower-center"></div>
+  </div>
+
+  <!-- Hidden Popup Page -->
+  <div class="popup" id="popupPage">
+    <div class="popup-content">
+      <p>..........</p> <!-- You can write your wish message here later -->
+    </div>
+  </div>
+
+  <script>
+    function openBox(box) {
+      box.classList.add('box-open');
+
+      setTimeout(() => {
+        document.getElementById('popupPage').classList.add('show');
+      }, 1000); // Wait for ribbon animation
+    }
+  </script>
+</body>
+</html>
